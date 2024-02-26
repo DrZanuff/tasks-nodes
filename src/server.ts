@@ -15,6 +15,7 @@ const server = createServer(async (req, res) => {
   )
 
   if (route) {
+    console.log('DBG: Current Route', url)
     return route.handler({ req, res, database })
   }
 
