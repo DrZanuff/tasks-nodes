@@ -1,6 +1,6 @@
-import { HTTPProps } from 'src/types'
+import { HTTPPropsWithDataBase } from 'src/types'
 
-export function getInfo({ req, res }: HTTPProps) {
+export function getInfo({ req, res }: HTTPPropsWithDataBase) {
   const endpoints = {
     '/': 'Get endpoints info. Use GET',
     '/taks': 'List all tasks. Uset GET',

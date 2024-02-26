@@ -6,4 +6,9 @@ export const routes = [
     method: 'GET',
     handler: getInfo,
   },
+  {
+    url: '/tasks',
+    method: 'POST',
+    handler: getInfo,
+  },
 ]
