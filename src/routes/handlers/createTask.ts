@@ -10,7 +10,6 @@ function isValidTaskPayload({
   title: string
   description: string
 }) {
-  console.log('DBG: IsValid', { title, description })
   if (!title || !description) {
     return false
   }
@@ -21,7 +20,6 @@ function isValidTaskPayload({
 export function createTask({ req, res, database }: HTTPPropsWithDataBase) {
   const id = randomUUID()
   const body = JSON.parse(req.body)
-  console.log('DBG: BODY-----', body)
   const title = get(body, 'title') as string
   const description = get(body, 'description') as string
   const completed_at = null

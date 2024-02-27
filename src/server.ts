@@ -2,20 +2,32 @@ import { createServer } from 'node:http'
 import { routes } from './routes/index'
 import { json } from './middlewares/json'
 import { DataBase } from './database'
+import { extractQueryParams } from './utils/extractQueryParams'
+import { getQueryFromUrl } from './utils/getQueryFromUrl'
+import isEmpty from 'lodash/isEmpty'
+import type { Req, Res } from './types'
+import { getUrlWithoutQueryParams } from './utils/getUrlWithoutQueryParams'
 
 const database = new DataBase()
 
-const server = createServer(async (req, res) => {
+const server = createServer(async (req: Req, res: Res) => {
   const { method, url } = req
 
   await json({ req, res })
 
+  const urlWithoutQueryParams = getUrlWithoutQueryParams(String(url))
+
   const route = routes.find(
-    (currentRoute) => currentRoute.method == method && currentRoute.url == url
+    (currentRoute) =>
+      currentRoute.method == method && currentRoute.url == urlWithoutQueryParams
   )
 
   if (route) {
-    console.log('DBG: Current Route', url)
+    const rawQuery = getQueryFromUrl(String(req.url))
+    const query = extractQueryParams(rawQuery)
+
+    req.query = !isEmpty(query) ? query : undefined
+
     return route.handler({ req, res, database })
   }
 

@@ -1,21 +1,8 @@
 import { readFile, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 
-// const databasePath = new URL('db.json', import.meta.url).pathname
 const path = join(__dirname, 'db.json')
-// const databasePath = new URL('db.json', path).pathname
 const databasePath = path.replace('/dist/', '/db/')
-console.log('DBG: path', path, '\n\n')
-console.log('DBG: databasePath', databasePath, '\n\n')
-
-// const path = __dirname.replace('/dist', '/db/db.json')
-
-// // const databasePath = new URL('db.json', `file:/${__filename}`).pathname
-// // const databasePath = new URL('db.json', path).pathname
-// const databasePath = new URL('db.json', `file:/${path}`).pathname
-// console.log('DBG2:', `file:/${__dirname}`, '|', `file:/${__filename}`)
-// console.log('DBG:', 'DataBase:', databasePath)
-// console.log('DBG3-----:', path)
 
 type Row = Record<string, any>
 
@@ -40,7 +27,7 @@ export class DataBase {
     })
   }
 
-  select(table: string, search: string) {
+  select(table: string, search?: any) {
     let data = this.#database[table] ?? []
 
     if (search) {

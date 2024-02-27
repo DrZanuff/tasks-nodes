@@ -1,13 +1,18 @@
 import type { IncomingMessage, ServerResponse } from 'node:http'
 import { DataBase } from './database'
 
+export type Req = IncomingMessage & {
+  body?: any
+  query?: Record<string, string>
+}
+
+export type Res = ServerResponse<IncomingMessage> & {
+  req: IncomingMessage
+}
+
 export type HTTPProps = {
-  req: IncomingMessage & {
-    body?: any
-  }
-  res: ServerResponse<IncomingMessage> & {
-    req: IncomingMessage
-  }
+  req: Req
+  res: Res
   database?: any
 }
 
