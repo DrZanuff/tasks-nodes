@@ -4,6 +4,9 @@ import { DataBase } from './database'
 export type Req = IncomingMessage & {
   body?: any
   query?: Record<string, string>
+  params?: {
+    [key: string]: string
+  }
 }
 
 export type Res = ServerResponse<IncomingMessage> & {

@@ -6,7 +6,6 @@ import { extractQueryParams } from './utils/extractQueryParams'
 import { getQueryFromUrl } from './utils/getQueryFromUrl'
 import isEmpty from 'lodash/isEmpty'
 import type { Req, Res } from './types'
-import { getUrlWithoutQueryParams } from './utils/getUrlWithoutQueryParams'
 
 const database = new DataBase()
 
@@ -15,18 +14,21 @@ const server = createServer(async (req: Req, res: Res) => {
 
   await json({ req, res })
 
-  const urlWithoutQueryParams = getUrlWithoutQueryParams(String(url))
-
   const route = routes.find(
     (currentRoute) =>
-      currentRoute.method == method && currentRoute.url == urlWithoutQueryParams
+      currentRoute.method == method &&
+      currentRoute.url.test(String(url)) === true
   )
 
   if (route) {
+    const routeParams = req?.url?.match(route.url)
+    const { ...params } = routeParams?.groups
+
     const rawQuery = getQueryFromUrl(String(req.url))
     const query = extractQueryParams(rawQuery)
 
     req.query = !isEmpty(query) ? query : undefined
+    req.params = params
 
     return route.handler({ req, res, database })
   }
