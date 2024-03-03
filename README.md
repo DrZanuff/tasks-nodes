@@ -1,6 +1,6 @@
 # Task Management API
 
-This is a Node.js project with Typescript that implements an API for CRUD (Create, Read, Update, Delete) operations on tasks.
+This is a Node.js project with Typescript that implements an API for CRUD (Create, Read, Update, Delete) operations on tasks. This project explores the use of Node.js vanilla features without any frameworks, intended for educational purposes.
 
 ## Features
 
@@ -39,11 +39,10 @@ Each task has the following fields:
 
 To import tasks from a CSV file, follow these instructions:
 
-1. Install the csv-parse library using your preferred package manager.
-2. Add the tasks to be imported in the file db/tasks.csv.
-3. In the CSV reading file, parse the CSV and for each line, make a request to the POST - /tasks route, passing the `title` and `description` fields.
+1. Add the tasks to be imported in the file db/tasks.csv.
+2. In the CSV reading file, parse the CSV and for each line, make a request to the POST - /tasks route, passing the `title` and `description` fields.
 
-Example of recommended CSV format:
+Example CSV format:
 
 ```
 title,description
