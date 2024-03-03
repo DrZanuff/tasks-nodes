@@ -40,7 +40,7 @@ Each task has the following fields:
 To import tasks from a CSV file, follow these instructions:
 
 1. Add the tasks to be imported in the file db/tasks.csv.
-2. In the CSV reading file, parse the CSV and for each line, make a request to the POST - /tasks route, passing the `title` and `description` fields.
+2. In the CSV reading file, add the `title` and `description` fields for each line, then make a request to the POST - /parse/tasks/ route.
 
 Example CSV format:
 
