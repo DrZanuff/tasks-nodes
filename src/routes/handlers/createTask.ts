@@ -1,4 +1,4 @@
-import { HTTPPropsWithDataBase } from 'src/types'
+import type { HTTPPropsWithDataBase, Res, DataBase } from 'src/types'
 import { get } from 'lodash'
 import { randomUUID } from 'crypto'
 import { TASKS_TABLE } from '../../config'
@@ -17,11 +17,18 @@ function isValidTaskPayload({
   return true
 }
 
-export function createTask({ req, res, database }: HTTPPropsWithDataBase) {
+export function createNewTask({
+  title,
+  description,
+  res,
+  database,
+}: {
+  title: string
+  description: string
+  res: Res
+  database: DataBase
+}) {
   const id = randomUUID()
-  const body = JSON.parse(req.body)
-  const title = get(body, 'title') as string
-  const description = get(body, 'description') as string
   const completed_at = null
   const created_at = new Date()
   const updated_at = new Date()
@@ -40,6 +47,16 @@ export function createTask({ req, res, database }: HTTPPropsWithDataBase) {
   }
 
   database.insert(TASKS_TABLE, payload)
+
+  return payload
+}
+
+export function createTask({ req, res, database }: HTTPPropsWithDataBase) {
+  const body = JSON.parse(req.body)
+  const title = get(body, 'title') as string
+  const description = get(body, 'description') as string
+
+  const payload = createNewTask({ title, description, res, database })
 
   return res.writeHead(201).end(`Task created \n\n ${JSON.stringify(payload)}`)
 }

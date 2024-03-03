@@ -1,5 +1,6 @@
 import type { IncomingMessage, ServerResponse } from 'node:http'
 import { DataBase } from './database'
+export { DataBase }
 
 export type Req = IncomingMessage & {
   body?: any
